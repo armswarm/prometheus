@@ -1,17 +1,23 @@
+platform: linux/arm
+
+clone:
+  git:
+    image: quay.io/armswarm/drone-git
+
 pipeline:
-  docker:
-    repo: armswarm/prometheus
+  build_and_publish:
+    image: quay.io/armswarm/drone-docker
+    secrets: [ docker_registry, docker_username, docker_password ]
+    repo: quay.io/armswarm/prometheus
     build_args:
-      - PROMETHEUS_VERSION=1.2.1
-      - VCS_REF=${DRONE_COMMIT_SHA}
-      - VCS_URL=${DRONE_REPO_LINK}
-      - BUILD_DATE=${DRONE_BUILD_CREATED}
-      - PROJECT_NAME=${DRONE_REPO}
-    tag: [ "latest", "1.2", "1.2.1" ]
+      - PROMETHEUS_VERSION=2.2.1
+    tag: [ "2.2.1", "2.2", "2", "latest" ]
     when:
       branch: master
       event: push
 
-  slack:
+  notify:
+    image: quay.io/armswarm/drone-slack
+    secrets: [ slack_webhook, plugin_channel, plugin_template ]
     when:
       status: [ failure, success ]
