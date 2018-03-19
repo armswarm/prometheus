@@ -1,5 +1,4 @@
-# FROM quay.io/armswarm/alpine:3.7
-FROM alpine:3.7
+FROM quay.io/armswarm/alpine:3.7
 
 ARG PROMETHEUS_VERSION
 ENV PROMETHEUS_VERSION=${PROMETHEUS_VERSION}
