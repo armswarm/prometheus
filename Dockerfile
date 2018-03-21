@@ -4,6 +4,7 @@ ARG PROMETHEUS_VERSION
 ENV PROMETHEUS_VERSION=${PROMETHEUS_VERSION}
 
 RUN \
+ apk add --no-cache ca-certificates && \
  apk add --no-cache --virtual=.fetch-dependencies \
 	curl && \
 # install prometheus
